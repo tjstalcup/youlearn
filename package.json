@@ -7,6 +7,9 @@
     "url": "https://github.com/tjstalcup/youlearn.git"
   },
   "license": "UNLICENSED",
+  "scripts":{
+    "test":"mocha"
+  },
   "dependencies": {
     "bcrypt-nodejs": "latest",
     "body-parser": "^1.18.3",
@@ -22,5 +25,11 @@
     "passport": "~0.3.2",
     "passport-google-oauth20": "^1.0.0",
     "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "faker": "^4.1.0",
+    "mocha": "^5.2.0"
   }
 }
