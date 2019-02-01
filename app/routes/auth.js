@@ -1,13 +1,17 @@
 module.exports = function(app, passport) {
 
   // process the login form
-  // app.post('/login', do all our passport stuff here);
+  app.post('/login', passport.authenticate('local-login',{
+    successRedirect: '/dashboard',
+    failureRedirect: '/login',
+    failureFlash: true
+  }));
 
   
 
   // process the signup form
   app.post('/signup', passport.authenticate('local-signup',{
-    successRedirect: '/profile',
+    successRedirect: '/dashboard',
     failureRedirect: '/signup',
     failureFlash: true
   }));
@@ -17,7 +21,7 @@ module.exports = function(app, passport) {
   app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }),
     function(req, res) {
       // Successful authentication, redirect to profile.
-      res.redirect('/profile');
+      res.redirect('/dashboard');
   });
 
   // logout

@@ -17,12 +17,14 @@ var configDB = require('./config/database.js');
 // week 2 - authentication
 require('./config/passport')(passport);
 
+app.use(express.static('public'));
+
 app.use(morgan('dev')); 
 app.use(cookieParser()); 
 app.use(bodyParser()); 
 
 // week 5 - template
-// app.set('view engine', 'ejs'); 
+app.set('view engine', 'ejs'); 
 
 // week 2 - authentication
 app.use(session({ secret: 'thinkful-8-temp' })); 

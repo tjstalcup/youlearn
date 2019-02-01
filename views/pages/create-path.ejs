@@ -1,0 +1,45 @@
+<% include ../partials/header.ejs %>
+
+<h4>Create a New Learning Path</h4>
+<form action="/path" method="post">
+  <!-- 
+
+      "title": "Practical FlexBox for Beginners",
+  "category": "Front End Development",
+  "author": "5c37e53838902409f401e306",
+  "tags": ["flex","flexbox","css","front-end","front end","frontend","web"]
+
+   -->
+  <p>
+    <label for="title">
+      <input type="text" name="title" placeholder="Learning Path Title (ex. How to Cross-Stitch)"/>
+    </label>
+  </p>
+  <p>
+      <label for="category">
+        <select name="category" id="category">
+          <option  value="" disabled selected>Select a Category...</option>
+          <option value="Front End Development">Front End Development</option>
+          <option value="Back End Development">Back End Development</option>
+          <option value="Crafts">Crafts</option>
+          <option value="Food">Food</option>
+          <option value="Automotive">Automotive</option>
+          <option value="Foreign Language">Foreign Language</option>
+        </select>
+      </label>
+    </p>
+
+    <input type="hidden" name="author" value="<%=user._id%>"/>
+
+    <p>
+      <label for="tags">
+        <input type="text" name="tags" id="tags" placeholder="Tags (html,css,js,color,japanese,ford,etc.)">
+      </label>
+    </p>
+
+  <p>
+    <input type="submit">
+  </p>
+</form>
+
+<% include ../partials/footer.ejs %>

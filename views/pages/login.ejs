@@ -1,0 +1,25 @@
+<% include ../partials/header.ejs %>
+
+<h4>Login to YouLearn</h4>
+<form action="/login" method="post">
+  <p>
+    <label for="email">
+      <input type="email" name="email" placeholder="email@email.com"/>
+    </label>
+  </p>
+  <p>
+      <label for="password">
+        <input type="password" name="password" placeholder="password"/>
+      </label>
+    </p>
+
+    <p class="google-login">
+        <a href="/auth/google"><i class="fab fa-google"></i> Sign in with Google</a>
+      </p>
+
+  <p>
+    <input type="submit">
+  </p>
+</form>
+
+<% include ../partials/footer.ejs %>

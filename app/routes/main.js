@@ -7,21 +7,45 @@ module.exports = function(app, passport) {
 
   // home page
   app.get('/', function(req, res) {
-    res.status(200).json({message:'Welcome to YouLearn'});
+    // res.status(200).json({message:'Welcome to YouLearn'});
+    res.render('pages/index.ejs',{
+      user: req.user
+    });
   });
 
   // show the login form
   app.get('/login', function(req, res) {
-    res.status(200).json({message:'Login Page'});
+    //res.status(200).json({message:'Login Page'});
+    res.render('pages/login.ejs',{
+      user: req.user
+    });
   });
 
   // show the signup form
   app.get('/signup', function(req, res) {
-    res.status(200).json({message:'Signup Page'});
+    // res.status(200).json({message:'Signup Page'});
+    res.render('pages/signup.ejs',{
+      user: req.user
+    });
   });
 
-  app.get('/profile', isLoggedIn, function(req, res) {
-    res.status(200).json({message:'Profile Page',user:req.user});
+  app.get('/dashboard', isLoggedIn, function(req, res) {
+    // res.status(200).json({message:'Profile Page',user:req.user});
+
+    Path.find()
+      .then((paths)=>{
+        res.render('pages/dashboard.ejs',{
+          user: req.user,
+          paths: paths
+        });
+      })
+      .catch(errorHandler);
+  });
+
+  app.get('/create-path', isLoggedIn, function(req,res){
+    res.render('pages/create-path.ejs',{
+      user: req.user
+    });
   });
 
   // Temp Routes - just for testing
@@ -57,8 +81,11 @@ module.exports = function(app, passport) {
   app.post('/path',(req,res)=>{
     // console.log(req.body);
     // title, category, author (ref), tags, rating, numReviews
+    req.body.tags = req.body.tags.split(",");
     Path.findOrCreate(req.body)
-      .then((path)=>res.json(path))
+      .then((path)=>{
+        res.redirect('/dashboard');
+      })
       .catch(errorHandler);
   })
 

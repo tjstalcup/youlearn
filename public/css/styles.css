@@ -1,0 +1,12 @@
+.logo-brand {
+  max-width: 240px;
+  display: inline-block;
+}
+
+.tags li {
+  display: inline-block;
+}
+
+.learning-path.learning-path-author {
+  background-color: orange;
+}
