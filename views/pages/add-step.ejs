@@ -1,0 +1,39 @@
+<% include ../partials/header.ejs %>
+
+<h4>Add a New Step --- <%=path.title%></h4>
+<form action="/step" method="post">
+  <!-- 
+
+      "title": "Practical FlexBox for Beginners",
+  "category": "Front End Development",
+  "author": "5c37e53838902409f401e306",
+  "tags": ["flex","flexbox","css","front-end","front end","frontend","web"]
+
+   -->
+  <p>
+    <label for="title">
+      <input type="text" name="title" placeholder="Do this now"/>
+    </label>
+  </p>
+  <p>If using youtube, please put in the format of (//www.youtube.com/embed/z0waXC1lxOU?rel=0")</p>
+  <p>
+    <label for="link">
+      <input type="text" name="link" placeholder="https://linkToAnOutsideResource.com"/>
+    </label>
+  </p>
+  
+
+    <input type="hidden" name="path" value="<%=path._id%>"/>
+
+    <p>
+      <label for="text">
+        <textarea name="text" id="text" class="materialize-textarea" placeholder="Descriptive Text for this Step"></textarea>
+      </label>
+    </p>
+
+  <p>
+    <input type="submit">
+  </p>
+</form>
+
+<% include ../partials/footer.ejs %>

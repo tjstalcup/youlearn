@@ -18,7 +18,10 @@
       <ul class="right">
         <% if(user) { %>
           <li><a href="/dashboard">Dashboard</a></li>
-          <li><a href="/create-path">Create Learning Path</a></li>
+          <% if(user.username){ %>
+            <li><a href="/create-path">Create Learning Path</a></li>
+          <% } %>
+          <li><a href="/edit-profile">Edit Profile</a></li>
           <li><a href="/logout">Logout</a></li>
         <% } else { %>
           <li><a href="/login">Login</a></li>

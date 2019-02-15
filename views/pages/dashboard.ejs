@@ -1,16 +1,18 @@
 <% include ../partials/header.ejs %>
 
-<h4>Your Dashboard</h4>
+<h4>Your Dashboard - <%-(user.username) ? user.username : '<a href="/edit-profile">Set Username to Enroll/Create Learning Paths</a>'%></h4>
 <p>Currently there are <%=paths.length%> paths</p>
 
 <div class="row learning-paths">
+  <h2>Currently Enrolled</h2>
   <% paths.forEach(function(path){ %>
-    <div class="col s12 m6 learning-path <%= (path.author._id.toString() == user._id.toString()) ? 'learning-path-author' : '' %>">
+    <% if(enrollments.hasOwnProperty(path._id) && user.completed.indexOf(path._id)<0) { %>
+    <div class="col s12 m6 learning-path <%= (path.author._id.toString() == user._id.toString()) ? 'learning-path-author' : '' %> <%= (enrollments.hasOwnProperty(path._id)) ? 'learning-path-enrolled' : '' %>">
       <div class="card blue-grey darken-1">
         <div class="card-content white-text">
           <span class="card-title"><%=path.title%></span>
           <p><%=path.category%></p>
-          <p class="author">By: <a href="#"><%=path.author.local.email%></a></p>
+          <p class="author">By: <a href="#"><%=path.author.username%></a></p>
           <ul class="tags">
             <% path.tags.forEach(function(tag){ %>
               <li><%=tag%>,</li>
@@ -18,13 +20,117 @@
           </ul>
         </div>
         <div class="card-action">
-          <a href="/path/enroll/<%=path._id%>/<%=user._id%>">Enroll in this Course</a>
+        <% if(user.username){ %>
+            <% if(enrollments.hasOwnProperty(path._id)) { %>
+              <a href="/path/<%=path._id%>" class="lime-text">Continue this Course</a>
+            <% } else { %>
+              <a href="/path/enroll/<%=path._id%>/<%=user._id%>">Enroll in this Course</a>
+            <% } %>
           <% if(path.author._id.toString() == user._id.toString()){ %>
-            <a href="/path/edit/<%=path._id%>">Edit Path</a>
+            <a href="/edit-path/<%=path._id%>">Edit Path</a>
           <% } %>
+          <span class="right yellow-text"><%=path.rating%>/5 <i class="fas fa-star"></i> <%=path.numReviews%> <i class="fas fa-users"></i></span>
+        <% } %>
         </div>
       </div>
     </div>
+    <% } %>
+  <% }) %>
+</div>
+<div class="row learning-paths">
+  <h2>Your Created Learning Paths</h2>
+  <% paths.forEach(function(path){ %>
+    <% if(path.author._id.toString() == user._id.toString()) { %>
+    <div class="col s12 m6 learning-path <%= (path.author._id.toString() == user._id.toString()) ? 'learning-path-author' : '' %> <%= (enrollments.hasOwnProperty(path._id)) ? 'learning-path-enrolled' : '' %>">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title"><%=path.title%></span>
+          <p><%=path.category%></p>
+          <p class="author">By: <a href="#"><%=path.author.username%></a></p>
+          <ul class="tags">
+            <% path.tags.forEach(function(tag){ %>
+              <li><%=tag%>,</li>
+            <% }) %>
+          </ul>
+        </div>
+        <div class="card-action">
+        <% if(user.username){ %>
+            
+          <% if(path.author._id.toString() == user._id.toString()){ %>
+            <a href="/edit-path/<%=path._id%>">Edit Path</a>
+          <% } %>
+          <span class="right yellow-text"><%=path.rating%>/5 <i class="fas fa-star"></i> <%=path.numReviews%> <i class="fas fa-users"></i></span>
+        <% } %>
+        </div>
+      </div>
+    </div>
+    <% } %>
+  <% }) %>
+</div>
+
+<div class="row learning-paths">
+    <h2>Completed Paths</h2>
+    <% paths.forEach(function(path){ %>
+      <% if(user.completed.indexOf(path._id)>=0) { %>
+      <div class="col s12 m6 learning-path <%= (path.author._id.toString() == user._id.toString()) ? 'learning-path-author' : '' %> <%= (enrollments.hasOwnProperty(path._id)) ? 'learning-path-enrolled' : '' %>">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title"><%=path.title%></span>
+            <p><%=path.category%></p>
+            <p class="author">By: <a href="#"><%=path.author.username%></a></p>
+            <ul class="tags">
+              <% path.tags.forEach(function(tag){ %>
+                <li><%=tag%>,</li>
+              <% }) %>
+            </ul>
+          </div>
+          <div class="card-action">
+          <% if(user.username){ %>
+              <span class="lime-text">Course Completed</span>
+            <% if(path.author._id.toString() == user._id.toString()){ %>
+              <a href="/edit-path/<%=path._id%>">Edit Path</a>
+            <% } %>
+            <span class="right yellow-text"><%=path.rating%>/5 <i class="fas fa-star"></i> <%=path.numReviews%> <i class="fas fa-users"></i></span>
+          <% } %>
+          </div>
+        </div>
+      </div>
+      <% } %>
+    <% }) %>
+  </div>
+
+<div class="row learning-paths">
+  <h2>Learn Something New</h2>
+  <% paths.forEach(function(path){ %>
+    <% if(path.author._id.toString() != user._id.toString() && !enrollments.hasOwnProperty(path._id)) { %>
+    <div class="col s12 m6 learning-path <%= (path.author._id.toString() == user._id.toString()) ? 'learning-path-author' : '' %> <%= (enrollments.hasOwnProperty(path._id)) ? 'learning-path-enrolled' : '' %>">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title"><%=path.title%></span>
+          <p><%=path.category%></p>
+          <p class="author">By: <a href="#"><%=path.author.username%></a></p>
+          <ul class="tags">
+            <% path.tags.forEach(function(tag){ %>
+              <li><%=tag%>,</li>
+            <% }) %>
+          </ul>
+        </div>
+        <div class="card-action">
+        <% if(user.username){ %>
+            <% if(enrollments.hasOwnProperty(path._id)) { %>
+              <a href="/path/<%=path._id%>" class="lime-text">Continue this Course</a>
+            <% } else { %>
+              <a href="/path/enroll/<%=path._id%>/<%=user._id%>">Enroll in this Course</a>
+            <% } %>
+          <% if(path.author._id.toString() == user._id.toString()){ %>
+            <a href="/edit-path/<%=path._id%>">Edit Path</a>
+          <% } %>
+          <span class="right yellow-text"><%=path.rating%>/5 <i class="fas fa-star"></i> <%=path.numReviews%> <i class="fas fa-users"></i></span>
+        <% } %>
+        </div>
+      </div>
+    </div>
+    <% } %>
   <% }) %>
 </div>
 

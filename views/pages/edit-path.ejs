@@ -1,0 +1,56 @@
+<% include ../partials/header.ejs %>
+
+<h4>Edit Path - <%=path.title%></h4>
+<form action="/edit-path/<%=path._id%>" method="post">
+  <!-- 
+
+      "title": "Practical FlexBox for Beginners",
+  "category": "Front End Development",
+  "author": "5c37e53838902409f401e306",
+  "tags": ["flex","flexbox","css","front-end","front end","frontend","web"]
+
+   -->
+  <p>
+    <label for="title">
+      <input type="text" name="title" placeholder="Learning Path Title (ex. How to Cross-Stitch)" value="<%=path.title%>"/>
+    </label>
+  </p>
+  <p>
+      <label for="category">
+        <select name="category" id="category">
+          <option  value="" disabled selected>Select a Category...</option>
+          <option value="Front End Development" <%= (path.category=="Front End Development") ? "selected" : ""%>>Front End Development</option>
+          <option value="Back End Development"  <%= (path.category=="Back End Development") ? "selected" : ""%>>Back End Development</option>
+          <option value="Crafts" <%= (path.category=="Crafts") ? "selected" : ""%>>Crafts</option>
+          <option value="Food" <%= (path.category=="Food") ? "selected" : ""%>>Food</option>
+          <option value="Automotive" <%= (path.category=="Automotive") ? "selected" : ""%>>Automotive</option>
+          <option value="Foreign Language" <%= (path.category=="Foreign Language") ? "selected" : ""%>>Foreign Language</option>
+        </select>
+      </label>
+    </p>
+
+    <p>
+      <label for="tags">
+        <input type="text" name="tags" id="tags" placeholder="Tags (html,css,js,color,japanese,ford,etc.)" value="<%=path.tags.toString()%>">
+      </label>
+    </p>
+
+  <p>
+    <input type="submit" value="Update Path">
+  </p>
+</form>
+
+<section class="manage-steps">
+  <h2>Steps</h2>
+  <p><a href="/add-step/<%=path._id%>" class="btn">Add New Step</a></p>
+
+  <ul class="collection">
+    <% steps.forEach(function(step){ %>
+      <li class="collection-item"><%=step.title%></li>
+    <% })  %>
+
+  </ul>
+
+</section>
+
+<% include ../partials/footer.ejs %>

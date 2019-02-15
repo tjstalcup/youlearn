@@ -9,8 +9,12 @@ var userSchema = mongoose.Schema({
         email        : String,
         password     : String,
     },
-    googleId: String
+    googleId: String,
+    username: String,
+    completed: [{type: mongoose.Schema.Types.ObjectId, ref: 'Path'}]
     // more coming soon w/ Google
+},{
+    usePushEach: true
 });
 
 // methods ======================

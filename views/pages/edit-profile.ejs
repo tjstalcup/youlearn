@@ -1,0 +1,15 @@
+<% include ../partials/header.ejs %>
+
+<h4>Update Profile</h4>
+<form action="/edit-profile" method="post">
+  <p>
+    <label for="username">
+      <input type="text" name="username" placeholder="username" value="<%=user.username%>"/>
+    </label>
+  </p>
+  <p>
+    <input type="submit" value="Update Profile">
+  </p>
+</form>
+
+<% include ../partials/footer.ejs %>

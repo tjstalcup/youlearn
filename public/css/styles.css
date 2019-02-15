@@ -10,3 +10,6 @@
 .learning-path.learning-path-author {
   background-color: orange;
 }
+.learning-path.learning-path-enrolled {
+  background-color: #c6ff00;
+}

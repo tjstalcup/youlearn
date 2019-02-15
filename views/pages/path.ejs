@@ -1,0 +1,47 @@
+<% include ../partials/header.ejs %>
+
+<h4><%=path.title%></h4>
+<h5 class="path-step-progress">Step <%=enrollment.currentStep%> of <%=steps.length%></h5>
+
+<!-- <p>Soon you will be seing step <%=enrollment.currentStep%> whose title is <%=steps[enrollment.currentStep-1].title%></p> -->
+<!-- <%=steps[enrollment.currentStep-1]%> -->
+
+<p><%=steps[enrollment.currentStep-1].text%></p>
+
+<% if(steps[enrollment.currentStep-1].link.indexOf('youtube')>=0) { %>
+  <div class="video-container">
+      <iframe width="853" height="480" src="<%=steps[enrollment.currentStep-1].link%>" frameborder="0" allowfullscreen></iframe>
+  </div>
+<% } else { %>
+  <p><a href="<%=steps[enrollment.currentStep-1].link%>" target="_blank" class="btn-large orange">Visit Outside Link</a></p>
+<% } %>
+
+<p>
+  <% if(enrollment.currentStep == steps.length) { %>
+    <h4>Please Review this Learning Path to Complete</h4>
+    <form action="/finish-path" method="post">
+      <input type="hidden" name="path" value="<%=path._id%>">
+      <p>
+        <label for="rating"> Rating 1-5
+          <select name="rating" id="rating">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </label>
+        <label for="review">
+          <input type="text" name="review" id="review" placeholder="Review (optional)">
+        </label>
+      </p>
+
+      <button class="btn">Finish Path</button>
+    </form>
+    
+  <% } else { %>
+    <a href="/next-step/<%=path._id%>" class="btn">Next Step</a>
+  <% } %>
+</p>
+
+<% include ../partials/footer.ejs %>
